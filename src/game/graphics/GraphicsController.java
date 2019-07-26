@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.PixelFormat;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
@@ -18,6 +19,7 @@ import sample.Main;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GraphicsController {
 
@@ -32,10 +34,11 @@ public class GraphicsController {
     private Timeline timeline;
     private World world;
     private ArrayList<GraphicsData> allGraphicsData;
+    private boolean flag;
 
     public GraphicsController(Stage primaryStage, Group root, World world) throws IOException {
 
-        this.frameRate = 2;
+        this.frameRate = 1;
         unitSize = 1;
         this.width = Main.WINDOW_WIDTH;
         this.height = Main.WINDOW_HEIGHT;
@@ -66,7 +69,7 @@ public class GraphicsController {
     }
 
     private void draw(){
-        allGraphicsData = world.getAllGraphicsData();
+        /*allGraphicsData = world.getAllGraphicsData();
         pixelWriter = graphicsContext.getPixelWriter();
         for(GraphicsData graphicsData: allGraphicsData) {
             for (int i = 0; i < graphicsData.image.length; i++) {
@@ -76,7 +79,38 @@ public class GraphicsController {
                     }
                 }
             }
+        }*/
+
+        WritableImage image = new WritableImage(40, 40);
+        byte[] imageInArray = new byte[40*40 * 4];
+
+        //Create byte image array
+        for (int i = 0; i < 40; i++) {
+            for (int j = 0; j < 40; j++) {
+                int color = i + j;
+
+                int intValue;
+                if(flag){
+                    flag = false;
+                    intValue = 0xFFAAAAAA;
+                }
+                else{
+                    flag=true;
+                    intValue = 0xFF555555;
+                }
+
+                for (int k = 0; k < 4; k++) {
+                    imageInArray[i * 4 + j * 40 * 4 + k] =
+                            (byte)((intValue >>> (k * 8))  & (0x000000FF));
+                }
+            }
         }
+
+        //Copy bytes to image
+        graphicsContext.setFill(Color.WHITE);
+        graphicsContext.clearRect(0,0, canvas.getWidth(),canvas.getHeight());
+        image.getPixelWriter().setPixels(0, 0, 40, 40, PixelFormat.getByteBgraInstance(), imageInArray, 0, 40 * 4);
+        graphicsContext.drawImage(image, 10, 10);
         pixelWriter = null;
     }
 
