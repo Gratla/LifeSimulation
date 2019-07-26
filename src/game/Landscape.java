@@ -32,13 +32,21 @@ public class Landscape {
         }
     }
 
+    public Color getGroundColor(int x, int y){
+        //System.out.println(ground.length + " - " + x + "; " + ground[0].length + " - " + y);
+        if(ground[x][y] == Biomes.Normal){
+            return Color.LIGHTGREEN;
+        }
+        else{
+            return null;
+        }
+    }
+
     public GraphicsData getGraphicsData(){
         Color[][] image = new Color[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if(ground[i][j] == Biomes.Normal){
-                    image[i][j] = Color.LIGHTGREEN;
-                }
+                image[i][j] = getGroundColor(i,j);
             }
         }
         graphicsData = new GraphicsData(0,0,image);

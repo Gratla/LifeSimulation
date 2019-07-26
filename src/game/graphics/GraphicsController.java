@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -34,7 +35,7 @@ public class GraphicsController {
 
     public GraphicsController(Stage primaryStage, Group root, World world) throws IOException {
 
-        this.frameRate = 10;
+        this.frameRate = 2;
         unitSize = 1;
         this.width = Main.WINDOW_WIDTH;
         this.height = Main.WINDOW_HEIGHT;

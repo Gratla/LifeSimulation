@@ -1,13 +1,13 @@
 package game;
 
+import datastructures.Vector2D;
 import game.graphics.GraphicsData;
 import javafx.scene.paint.Color;
 
 public class Plant extends Creature{
 
     public Plant(int posX, int posY){
-        this.posX = posX;
-        this.posY = posY;
+        this.position = new Vector2D(posX,posY);
         this.width = 5;
         this.height = 5;
         this.graphicsChanged = true;
@@ -21,6 +21,6 @@ public class Plant extends Creature{
                 image[i][j] = Color.DARKGREEN;
             }
         }
-        return new GraphicsData(posX,posY,image);
+        return new GraphicsData(getPixelPosX(),getPixelPosY(),image);
     }
 }
