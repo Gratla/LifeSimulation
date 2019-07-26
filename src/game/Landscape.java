@@ -17,10 +17,12 @@ public class Landscape {
     private Biomes[][] ground;
 
     private GraphicsData graphicsData;
+    public boolean graphicsChanged;
 
     public Landscape(int width, int height){
         this.width = width;
         this.height = height;
+        this.graphicsChanged = true;
 
         this.ground = new Biomes[width][height];
         for (int i = 0; i < width; i++) {
@@ -35,7 +37,7 @@ public class Landscape {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 if(ground[i][j] == Biomes.Normal){
-                    image[i][j] = Color.GREEN;
+                    image[i][j] = Color.LIGHTGREEN;
                 }
             }
         }

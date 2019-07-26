@@ -1,8 +1,15 @@
 package game;
 
-import javafx.scene.paint.Paint;
+import game.graphics.GraphicsData;
 
 public abstract class Creature {
-    private int health;
-    private Paint color;
+    protected int posX, posY;
+    protected int width, height;
+    protected int health;
+
+    public boolean graphicsChanged;
+
+    public GraphicsData getGraphicsData(){
+        return null;
+    }
 }

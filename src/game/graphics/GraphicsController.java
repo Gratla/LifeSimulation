@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 import game.World;
 import javafx.util.Duration;
+import sample.Main;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,8 +36,8 @@ public class GraphicsController {
 
         this.frameRate = 10;
         unitSize = 1;
-        this.width = 600;
-        this.height = 600;
+        this.width = Main.WINDOW_WIDTH;
+        this.height = Main.WINDOW_HEIGHT;
 
         canvas = new Canvas(width,height);
         graphicsContext = canvas.getGraphicsContext2D();
@@ -69,8 +70,9 @@ public class GraphicsController {
         for(GraphicsData graphicsData: allGraphicsData) {
             for (int i = 0; i < graphicsData.image.length; i++) {
                 for (int j = 0; j < graphicsData.image[i].length; j++) {
-
-                    pixelWriter.setColor(graphicsData.posX + i, graphicsData.posY + j, graphicsData.image[i][j]);
+                    if(graphicsData.image[i][j] != null){
+                        pixelWriter.setColor(graphicsData.posX + i, graphicsData.posY + j, graphicsData.image[i][j]);
+                    }
                 }
             }
         }
