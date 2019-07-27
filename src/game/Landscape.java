@@ -32,24 +32,31 @@ public class Landscape {
         }
     }
 
-    public Color getGroundColor(int x, int y){
+    public int getGroundColor(int x, int y){
         //System.out.println(ground.length + " - " + x + "; " + ground[0].length + " - " + y);
         if(ground[x][y] == Biomes.Normal){
-            return Color.LIGHTGREEN;
+            return 0xFF96FF96;
         }
         else{
-            return null;
+            return -1;
         }
     }
 
     public GraphicsData getGraphicsData(){
-        Color[][] image = new Color[width][height];
+        byte[] image = new byte[width * height *4];
+
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                image[i][j] = getGroundColor(i,j);
+                int intValue = getGroundColor(i, j);
+
+                for (int k = 0; k < 4; k++) {
+                    image[i * 4 + j * height * 4 + k] =
+                            (byte)((intValue >>> (k * 8))  & (0x000000FF));
+                }
             }
         }
-        graphicsData = new GraphicsData(0,0,image);
+
+        graphicsData = new GraphicsData(0,0, width, height,image);
         return graphicsData;
     }
 }

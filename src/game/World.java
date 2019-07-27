@@ -119,14 +119,19 @@ public class World {
         if(creatures.size()>0){
             for(Creature creature: creatures){
 
-                Color[][] image = new Color[width][height];
-                for (int i = 0; i < width; i++) {
-                    for (int j = 0; j < height; j++) {
-                        //image[i][j] = landscape.getGroundColor(creature.getPixelOldPosX() + i,creature.getPixelOldPosY() + j);
-                        image[i][j] = landscape.getGroundColor(i, j);
+                byte[] image = new byte[creature.width * creature.height *4];
+
+                for (int i = 0; i < creature.width; i++) {
+                    for (int j = 0; j < creature.height; j++) {
+                        int intValue = landscape.getGroundColor(creature.getPixelOldPosX() + i,creature.getPixelOldPosY() + j);
+
+                        for (int k = 0; k < 4; k++) {
+                            image[i * 4 + j * creature.height * 4 + k] =
+                                    (byte)((intValue >>> (k * 8))  & (0x000000FF));
+                        }
                     }
                 }
-                result.add(new GraphicsData(creature.getPixelOldPosX(),creature.getPixelOldPosY(),image));
+                result.add(new GraphicsData(creature.getPixelOldPosX(),creature.getPixelOldPosY(), creature.width, creature.height,image));
             }
         }
 

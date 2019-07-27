@@ -27,6 +27,7 @@ public class GraphicsController {
     private double unitSize;
     private int width;
     private int height;
+    private byte[] imageInArray;
 
     private Canvas canvas;
     private GraphicsContext graphicsContext;
@@ -42,6 +43,7 @@ public class GraphicsController {
         unitSize = 1;
         this.width = Main.WINDOW_WIDTH;
         this.height = Main.WINDOW_HEIGHT;
+        imageInArray = new byte[width * height * 4];
 
         canvas = new Canvas(width,height);
         graphicsContext = canvas.getGraphicsContext2D();
@@ -69,49 +71,32 @@ public class GraphicsController {
     }
 
     private void draw(){
-        /*allGraphicsData = world.getAllGraphicsData();
-        pixelWriter = graphicsContext.getPixelWriter();
+        loadGraphicsData();
+
+        graphicsContext.setFill(Color.WHITE);
+        graphicsContext.clearRect(0,0, canvas.getWidth(),canvas.getHeight());
+
+        WritableImage image = new WritableImage((int)canvas.getWidth(), (int)canvas.getHeight());
+        image.getPixelWriter().setPixels(0, 0, (int)canvas.getWidth(), (int)canvas.getHeight(), PixelFormat.getByteBgraInstance(), imageInArray, 0, (int)canvas.getHeight() * 4);
+        graphicsContext.drawImage(image, 0, 0);
+    }
+
+    private void loadGraphicsData(){
+
+        allGraphicsData = world.getAllGraphicsData();
         for(GraphicsData graphicsData: allGraphicsData) {
-            for (int i = 0; i < graphicsData.image.length; i++) {
-                for (int j = 0; j < graphicsData.image[i].length; j++) {
-                    if(graphicsData.image[i][j] != null){
-                        pixelWriter.setColor(graphicsData.posX + i, graphicsData.posY + j, graphicsData.image[i][j]);
+            for (int i = 0; i < graphicsData.width; i++) {
+                for (int j = 0; j < graphicsData.height; j++) {
+                    for (int k = 0; k < 4; k++) {
+                        imageInArray[(i+graphicsData.posX) * 4 + (j+graphicsData.posY) * graphicsData.height * 4 + k] = (byte) ((graphicsData.image[i * 4 + j * graphicsData.height * 4 + k] >>> (k * 8))  & (0x000000FF));
                     }
-                }
-            }
-        }*/
 
-        WritableImage image = new WritableImage(40, 40);
-        byte[] imageInArray = new byte[40*40 * 4];
-
-        //Create byte image array
-        for (int i = 0; i < 40; i++) {
-            for (int j = 0; j < 40; j++) {
-                int color = i + j;
-
-                int intValue;
-                if(flag){
-                    flag = false;
-                    intValue = 0xFFAAAAAA;
-                }
-                else{
-                    flag=true;
-                    intValue = 0xFF555555;
-                }
-
-                for (int k = 0; k < 4; k++) {
-                    imageInArray[i * 4 + j * 40 * 4 + k] =
-                            (byte)((intValue >>> (k * 8))  & (0x000000FF));
+                    /*if(graphicsData.image[i][j] != null){
+                        pixelWriter.setColor(graphicsData.posX + i, graphicsData.posY + j, graphicsData.image[i][j]);
+                    }*/
                 }
             }
         }
-
-        //Copy bytes to image
-        graphicsContext.setFill(Color.WHITE);
-        graphicsContext.clearRect(0,0, canvas.getWidth(),canvas.getHeight());
-        image.getPixelWriter().setPixels(0, 0, 40, 40, PixelFormat.getByteBgraInstance(), imageInArray, 0, 40 * 4);
-        graphicsContext.drawImage(image, 10, 10);
-        pixelWriter = null;
     }
 
 

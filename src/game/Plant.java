@@ -15,12 +15,19 @@ public class Plant extends Creature{
 
     @Override
     public GraphicsData getGraphicsData(){
-        Color[][] image = new Color[width][height];
+        byte[] image = new byte[width * height *4];
+
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                image[i][j] = Color.DARKGREEN;
+                int intValue = 0xFF009600;
+
+                for (int k = 0; k < 4; k++) {
+                    image[i * 4 + j * height * 4 + k] =
+                            (byte)((intValue >>> (k * 8))  & (0x000000FF));
+                }
             }
         }
-        return new GraphicsData(getPixelPosX(),getPixelPosY(),image);
+
+        return new GraphicsData(getPixelPosX(),getPixelPosY(), width, height,image);
     }
 }
