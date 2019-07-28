@@ -52,7 +52,10 @@ public class GraphicsController {
 
         root.getChildren().add(canvas);
         primaryStage.setTitle("Life Simulation");
-        primaryStage.setScene(new Scene(root, width, height));
+
+        Scene scene = new Scene(root, width, height);
+        primaryStage.setScene(scene);
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
         initTimeline();
 
@@ -73,8 +76,8 @@ public class GraphicsController {
     private void draw(){
         loadGraphicsData();
 
-        WritableImage image = new WritableImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
-        image.getPixelWriter().setPixels(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, PixelFormat.getByteBgraInstance(), imageInArray, 0, Main.WINDOW_HEIGHT*4);
+        WritableImage image = new WritableImage(width, height);
+        image.getPixelWriter().setPixels(0, 0, width, height, PixelFormat.getByteBgraInstance(), imageInArray, 0, height * 4);
         graphicsContext.drawImage(image, 0, 0);
     }
 
@@ -85,8 +88,8 @@ public class GraphicsController {
             for (int i = 0; i < graphicsData.width; i++) {
                 for (int j = 0; j < graphicsData.height; j++) {
                     for (int k = 0; k < 4; k++) {
-                        //if(i+graphicsData.posX < width && j+graphicsData.posY < height && i+graphicsData.posX>0)
-                        imageInArray[(i+graphicsData.posX) * 4 + (j+graphicsData.posY) * Main.WINDOW_HEIGHT * 4 + k] = graphicsData.image[i * 4 + j * graphicsData.height * 4 + k];
+                        if(i+graphicsData.posX < width && j+graphicsData.posY < height && i+graphicsData.posX>0 && j+graphicsData.posY>0)
+                        imageInArray[(i+graphicsData.posX) * 4 + (j+graphicsData.posY) * height * 4 + k] = graphicsData.image[i * 4 + j * graphicsData.height * 4 + k];
                     }
 
                     /*if(graphicsData.image[i][j] != null){

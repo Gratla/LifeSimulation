@@ -8,8 +8,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    public static final int WINDOW_WIDTH = 1280;
-    public static final int WINDOW_HEIGHT = 750;
+    public static final int WINDOW_WIDTH = 1000;
+    public static final int WINDOW_HEIGHT = 100;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -17,6 +17,7 @@ public class Main extends Application {
         //Pane root = FXMLLoader.load(getClass().getResource("sample.fxml"));
 
         Group root = new Group();
+        root.getStyleClass().add("container");
         World world = new World(WINDOW_WIDTH,WINDOW_HEIGHT);
         GraphicsController graphicsController = new GraphicsController(primaryStage, root, world);
 

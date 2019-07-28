@@ -1,12 +1,10 @@
 package game;
 
-import com.sun.prism.Graphics;
 import datastructures.Vector2D;
 import game.graphics.GraphicsData;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -88,7 +86,7 @@ public class World {
 
     private void spawnCreatures(int num){
         for (int i = 0; i < num; i++) {
-            int Min = 1;
+            int Min = width;
             int MaxWidth = width;
             int MaxHeight = height;
             creatures.add(new Animal(Min + (int)(Math.random() * ((MaxWidth - Min) + 1)),Min + (int)(Math.random() * ((MaxHeight - Min) + 1))));
