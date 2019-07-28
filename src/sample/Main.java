@@ -3,9 +3,7 @@ package sample;
 import game.graphics.GraphicsController;
 import game.World;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class Main extends Application {

@@ -14,14 +14,15 @@ public class Animal extends Creature {
     public Animal(int posX, int posY){
         this.oldPosition = new Vector2D(posX,posY);
         this.position = new Vector2D(posX,posY);
-        this.width = 1;
-        this.height = 1;
+        this.width = 5;
+        this.height = 5;
         this.graphicsChanged = true;
 
-        this.direction = new Vector2D(Math.random()-0.5, Math.random()-0.5);
+        //this.direction = new Vector2D(Math.random()-0.5, Math.random()-0.5);
+        this.direction = new Vector2D(-0.5, Math.random()-0.5);
         this.direction.normalize();
 
-        this.speed = 0.4;
+        this.speed = 0.9;
         this.deltaMove = 1;
     }
 
@@ -37,7 +38,7 @@ public class Animal extends Creature {
 
     @Override
     public GraphicsData getGraphicsData(){
-        byte[] image = new byte[width * height *4];
+        byte[] image = new byte[width * height * 4];
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
@@ -49,7 +50,6 @@ public class Animal extends Creature {
                 }
             }
         }
-
         return new GraphicsData(getPixelPosX(),getPixelPosY(), width, height,image);
     }
 }

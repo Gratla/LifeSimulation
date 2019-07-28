@@ -1,6 +1,7 @@
 package game;
 
 import com.sun.prism.Graphics;
+import datastructures.Vector2D;
 import game.graphics.GraphicsData;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -26,7 +27,7 @@ public class World {
         this.height = height;
         this.landscape = new Landscape(width, height);
 
-        this.stepRate = 500;
+        this.stepRate = 50;
         initTimeline();
 
         plants = new ArrayList<>();
@@ -55,7 +56,24 @@ public class World {
         if(creatures.size() > 0){
             for(Creature creature: creatures){
                 creature.move();
+                preventBorderCrossing(creature);
             }
+        }
+    }
+
+    private void preventBorderCrossing(Creature creature){
+        if(creature.getPixelPosX() < 0){
+            creature.position.set(0, creature.position.y);
+        }
+        else if(creature.getPixelPosX() > width - creature.getWidth()){
+            creature.position.set(width - creature.getWidth(), creature.position.y);
+        }
+
+        if(creature.getPixelPosY() < 0){
+            creature.position.set(creature.position.x, 0);
+        }
+        else if(creature.getPixelPosY() > height - creature.getHeight()){
+            creature.position.set(creature.position.x, height - creature.getHeight());
         }
     }
 
@@ -81,16 +99,15 @@ public class World {
         ArrayList<GraphicsData> result = new ArrayList<>();
 
         if(landscape.graphicsChanged){
-            System.out.println("DrawLandscape");
             result.add(landscape.getGraphicsData());
             landscape.graphicsChanged = false;
         }
 
         ArrayList<GraphicsData> backgroundData = getBackgroundGraphicsData();
 
-        /*if(backgroundData.size() > 0){
+        if(backgroundData.size() > 0){
             result.addAll(backgroundData);
-        }*/
+        }
 
         if(plants.size()>0){
             for(Plant plant: plants){
@@ -118,20 +135,23 @@ public class World {
 
         if(creatures.size()>0){
             for(Creature creature: creatures){
+                if(creature.graphicsChanged){
+                    byte[] image = new byte[creature.width * creature.height *4];
 
-                byte[] image = new byte[creature.width * creature.height *4];
+                    for (int i = 0; i < creature.width; i++) {
+                        for (int j = 0; j < creature.height; j++) {
+                            int intValue = landscape.getGroundColor(creature.getPixelOldPosX() + i,creature.getPixelOldPosY() + j);
+                            //int intValue = 0xFFFF0000;
 
-                for (int i = 0; i < creature.width; i++) {
-                    for (int j = 0; j < creature.height; j++) {
-                        int intValue = landscape.getGroundColor(creature.getPixelOldPosX() + i,creature.getPixelOldPosY() + j);
-
-                        for (int k = 0; k < 4; k++) {
-                            image[i * 4 + j * creature.height * 4 + k] =
-                                    (byte)((intValue >>> (k * 8))  & (0x000000FF));
+                            for (int k = 0; k < 4; k++) {
+                                image[i * 4 + j * creature.height * 4 + k] =
+                                        (byte)((intValue >>> (k * 8))  & (0x000000FF));
+                            }
                         }
                     }
+                    result.add(new GraphicsData(creature.getPixelOldPosX(),creature.getPixelOldPosY(), creature.width, creature.height,image));
+                    creature.oldPosition = new Vector2D(creature.position);
                 }
-                result.add(new GraphicsData(creature.getPixelOldPosX(),creature.getPixelOldPosY(), creature.width, creature.height,image));
             }
         }
 

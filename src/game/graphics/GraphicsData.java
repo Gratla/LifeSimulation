@@ -1,7 +1,5 @@
 package game.graphics;
 
-import javafx.scene.paint.Color;
-
 public class GraphicsData {
     public int posX, posY;
     public int width, height;

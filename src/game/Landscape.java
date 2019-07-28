@@ -1,7 +1,6 @@
 package game;
 
 import game.graphics.GraphicsData;
-import javafx.scene.paint.Color;
 
 public class Landscape {
 
@@ -33,9 +32,22 @@ public class Landscape {
     }
 
     public int getGroundColor(int x, int y){
-        //System.out.println(ground.length + " - " + x + "; " + ground[0].length + " - " + y);
+        if(x > width - 1){
+            x = width - 1;
+        }
+        else if(x < 0 ){
+            x = 0;
+        }
+
+        if(y > height - 1){
+            y = height - 1;
+        }
+        else if (y < 0){
+            y = 0;
+        }
+
         if(ground[x][y] == Biomes.Normal){
-            return 0xFF96FF96;
+            return 0xFF40FF40;
         }
         else{
             return -1;
@@ -43,8 +55,8 @@ public class Landscape {
     }
 
     public GraphicsData getGraphicsData(){
-        byte[] image = new byte[width * height *4];
-
+        byte[] image = new byte[width * height * 4];
+        System.out.println(height);
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 int intValue = getGroundColor(i, j);

@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import game.World;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import sample.Main;
 
@@ -35,11 +36,10 @@ public class GraphicsController {
     private Timeline timeline;
     private World world;
     private ArrayList<GraphicsData> allGraphicsData;
-    private boolean flag;
 
     public GraphicsController(Stage primaryStage, Group root, World world) throws IOException {
 
-        this.frameRate = 1;
+        this.frameRate = 30;
         unitSize = 1;
         this.width = Main.WINDOW_WIDTH;
         this.height = Main.WINDOW_HEIGHT;
@@ -73,11 +73,8 @@ public class GraphicsController {
     private void draw(){
         loadGraphicsData();
 
-        graphicsContext.setFill(Color.WHITE);
-        graphicsContext.clearRect(0,0, canvas.getWidth(),canvas.getHeight());
-
-        WritableImage image = new WritableImage((int)canvas.getWidth(), (int)canvas.getHeight());
-        image.getPixelWriter().setPixels(0, 0, (int)canvas.getWidth(), (int)canvas.getHeight(), PixelFormat.getByteBgraInstance(), imageInArray, 0, (int)canvas.getHeight() * 4);
+        WritableImage image = new WritableImage(Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
+        image.getPixelWriter().setPixels(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT, PixelFormat.getByteBgraInstance(), imageInArray, 0, Main.WINDOW_HEIGHT*4);
         graphicsContext.drawImage(image, 0, 0);
     }
 
@@ -88,7 +85,8 @@ public class GraphicsController {
             for (int i = 0; i < graphicsData.width; i++) {
                 for (int j = 0; j < graphicsData.height; j++) {
                     for (int k = 0; k < 4; k++) {
-                        imageInArray[(i+graphicsData.posX) * 4 + (j+graphicsData.posY) * graphicsData.height * 4 + k] = (byte) ((graphicsData.image[i * 4 + j * graphicsData.height * 4 + k] >>> (k * 8))  & (0x000000FF));
+                        //if(i+graphicsData.posX < width && j+graphicsData.posY < height && i+graphicsData.posX>0)
+                        imageInArray[(i+graphicsData.posX) * 4 + (j+graphicsData.posY) * Main.WINDOW_HEIGHT * 4 + k] = graphicsData.image[i * 4 + j * graphicsData.height * 4 + k];
                     }
 
                     /*if(graphicsData.image[i][j] != null){
