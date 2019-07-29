@@ -14,7 +14,6 @@ public class World {
     private int width;
     private int height;
     private Landscape landscape;
-    private ArrayList<Plant> plants;
     private ArrayList<Creature> creatures;
 
     private Timeline timeline;
@@ -28,14 +27,13 @@ public class World {
         this.stepRate = 100;
         initTimeline();
 
-        plants = new ArrayList<>();
         creatures = new ArrayList<>();
 
         spawnPlants(width*height/10000);
         spawnCreatures(width*height/20000);
     }
 
-    public void initTimeline(){
+    private void initTimeline(){
         timeline = new Timeline(
                 new KeyFrame(
                         Duration.millis(stepRate),
@@ -76,7 +74,7 @@ public class World {
             int Min = 1;
             int MaxWidth = width;
             int MaxHeight = height;
-            plants.add(new Plant(Min + (int)(Math.random() * ((MaxWidth - Min) + 1)),Min + (int)(Math.random() * ((MaxHeight - Min) + 1))));
+            creatures.add(new Plant(Min + (int)(Math.random() * ((MaxWidth - Min) + 1)),Min + (int)(Math.random() * ((MaxHeight - Min) + 1))));
         }
     }
 
@@ -101,15 +99,6 @@ public class World {
 
         if(backgroundData.size() > 0){
             result.addAll(backgroundData);
-        }
-
-        if(plants.size()>0){
-            for(Plant plant: plants){
-                if(plant.graphicsChanged){
-                    result.add(plant.getGraphicsData());
-                    plant.graphicsChanged = false;
-                }
-            }
         }
 
         if(creatures.size()>0){

@@ -12,12 +12,16 @@ public class DNA {
         this.height = height;
     }
 
-    public void createRandomProperties(){
+    /*public void createRandomProperties(){
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 properties[i][j] = new DNAMovement();
             }
         }
+    }*/
+
+    public void setProperties(DNAProperty[][] properties) {
+        this.properties = properties;
     }
 
     public void useProperties(Creature creature){

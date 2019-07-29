@@ -16,7 +16,6 @@ public abstract class Creature {
         this.position = new Vector2D(position);
         this.oldPosition = new Vector2D(position);
         this.dna = new DNA(width,height);
-        this.dna.createRandomProperties();
         this.width = width;
         this.height = height;
     }
