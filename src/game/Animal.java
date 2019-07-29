@@ -18,8 +18,7 @@ public class Animal extends Creature {
         this.height = 5;
         this.graphicsChanged = true;
 
-        //this.direction = new Vector2D(Math.random()-0.5, Math.random()-0.5);
-        this.direction = new Vector2D(-0.5, Math.random()-0.5);
+        this.direction = new Vector2D(Math.random()-0.5, Math.random()-0.5);
         this.direction.normalize();
 
         this.speed = 0.9;

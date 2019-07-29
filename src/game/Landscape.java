@@ -56,19 +56,19 @@ public class Landscape {
 
     public GraphicsData getGraphicsData(){
         byte[] image = new byte[width * height * 4];
-        System.out.println(height);
+
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 int intValue = getGroundColor(i, j);
 
                 for (int k = 0; k < 4; k++) {
-                    image[i * 4 + j * height * 4 + k] =
+                    image[i * 4 + j * width * 4 + k] =
                             (byte)((intValue >>> (k * 8))  & (0x000000FF));
                 }
             }
         }
 
-        graphicsData = new GraphicsData(0,0, width, height,image);
+        graphicsData = new GraphicsData(0,0, width, height, image);
         return graphicsData;
     }
 }

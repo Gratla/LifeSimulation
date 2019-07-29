@@ -60,15 +60,15 @@ public class World {
     }
 
     private void preventBorderCrossing(Creature creature){
-        if(creature.getPixelPosX() < 0){
-            creature.position.set(0, creature.position.y);
+        if(creature.getPixelPosX() < 1){
+            creature.position.set(1, creature.position.y);
         }
         else if(creature.getPixelPosX() > width - creature.getWidth()){
             creature.position.set(width - creature.getWidth(), creature.position.y);
         }
 
-        if(creature.getPixelPosY() < 0){
-            creature.position.set(creature.position.x, 0);
+        if(creature.getPixelPosY() < 1){
+            creature.position.set(creature.position.x, 1);
         }
         else if(creature.getPixelPosY() > height - creature.getHeight()){
             creature.position.set(creature.position.x, height - creature.getHeight());
@@ -86,7 +86,7 @@ public class World {
 
     private void spawnCreatures(int num){
         for (int i = 0; i < num; i++) {
-            int Min = width;
+            int Min = 1;
             int MaxWidth = width;
             int MaxHeight = height;
             creatures.add(new Animal(Min + (int)(Math.random() * ((MaxWidth - Min) + 1)),Min + (int)(Math.random() * ((MaxHeight - Min) + 1))));
@@ -139,7 +139,6 @@ public class World {
                     for (int i = 0; i < creature.width; i++) {
                         for (int j = 0; j < creature.height; j++) {
                             int intValue = landscape.getGroundColor(creature.getPixelOldPosX() + i,creature.getPixelOldPosY() + j);
-                            //int intValue = 0xFFFF0000;
 
                             for (int k = 0; k < 4; k++) {
                                 image[i * 4 + j * creature.height * 4 + k] =

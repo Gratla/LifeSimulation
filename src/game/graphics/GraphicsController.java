@@ -77,7 +77,7 @@ public class GraphicsController {
         loadGraphicsData();
 
         WritableImage image = new WritableImage(width, height);
-        image.getPixelWriter().setPixels(0, 0, width, height, PixelFormat.getByteBgraInstance(), imageInArray, 0, height * 4);
+        image.getPixelWriter().setPixels(0, 0, width, height, PixelFormat.getByteBgraInstance(), imageInArray, 0, width * 4);
         graphicsContext.drawImage(image, 0, 0);
     }
 
@@ -89,7 +89,7 @@ public class GraphicsController {
                 for (int j = 0; j < graphicsData.height; j++) {
                     for (int k = 0; k < 4; k++) {
                         if(i+graphicsData.posX < width && j+graphicsData.posY < height && i+graphicsData.posX>0 && j+graphicsData.posY>0)
-                        imageInArray[(i+graphicsData.posX) * 4 + (j+graphicsData.posY) * height * 4 + k] = graphicsData.image[i * 4 + j * graphicsData.height * 4 + k];
+                        imageInArray[(i+graphicsData.posX) * 4 + (j+graphicsData.posY) * width * 4 + k] = graphicsData.image[i * 4 + j * graphicsData.width * 4 + k];
                     }
 
                     /*if(graphicsData.image[i][j] != null){
