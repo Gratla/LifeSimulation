@@ -25,7 +25,7 @@ public class World {
         this.height = height;
         this.landscape = new Landscape(width, height);
 
-        this.stepRate = 50;
+        this.stepRate = 100;
         initTimeline();
 
         plants = new ArrayList<>();
@@ -47,13 +47,9 @@ public class World {
     }
 
     private void processChanges(){
-        moveCreatures();
-    }
-
-    private void moveCreatures(){
         if(creatures.size() > 0){
             for(Creature creature: creatures){
-                creature.move();
+                creature.useProperties();
                 preventBorderCrossing(creature);
             }
         }

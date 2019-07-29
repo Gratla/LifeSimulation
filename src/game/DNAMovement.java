@@ -2,17 +2,14 @@ package game;
 
 import datastructures.Vector2D;
 
-public class Animal extends Creature {
-
-    private double speed;   //speed <= 1 && speed >= 0
-    private double deltaMove;
+public class DNAMovement extends DNAProperty {
 
     private Vector2D direction;
+    private double speed;
+    private double deltaMove;
 
-    public Animal(int posX, int posY){
-        super(new Vector2D(posX,posY), 1, 1);
-
-        this.graphicsChanged = true;
+    public DNAMovement() {
+        super(0xFF000000);
 
         this.direction = new Vector2D(Math.random()-0.5, Math.random()-0.5);
         this.direction.normalize();
@@ -21,13 +18,13 @@ public class Animal extends Creature {
         this.deltaMove = 1;
     }
 
-    public void move(){
+    public void useProperty(Creature creature){
         deltaMove -= speed;
 
         if(deltaMove < 0){
             deltaMove += 1;
-            position.add(direction);
-            graphicsChanged = true;
+            creature.position.add(direction);
+            creature.graphicsChanged = true;
         }
     }
 }

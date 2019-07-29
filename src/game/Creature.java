@@ -7,13 +7,34 @@ public abstract class Creature {
 
     protected Vector2D oldPosition;
     protected Vector2D position;
+    protected DNA dna;
     protected int width, height;
-    protected int health;
 
     public boolean graphicsChanged;
 
+    public Creature(Vector2D position, int width, int height){
+        this.position = new Vector2D(position);
+        this.oldPosition = new Vector2D(position);
+        this.dna = new DNA(width,height);
+        this.dna.createRandomProperties();
+        this.width = width;
+        this.height = height;
+    }
+
     public GraphicsData getGraphicsData(){
-        return null;
+        byte[] image = new byte[width * height * 4];
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                int intValue = dna.getColor(i,j);
+
+                for (int k = 0; k < 4; k++) {
+                    image[i * 4 + j * height * 4 + k] =
+                            (byte)((intValue >>> (k * 8))  & (0x000000FF));
+                }
+            }
+        }
+        return new GraphicsData(getPixelPosX(),getPixelPosY(), width, height,image);
     }
 
     public Vector2D getOldPosition(){
@@ -28,7 +49,9 @@ public abstract class Creature {
         return height;
     }
 
-    public void move(){}
+    public void useProperties(){
+        dna.useProperties(this);
+    }
 
     public int getPixelPosX(){
         return (int)Math.round(position.x);
