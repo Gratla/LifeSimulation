@@ -5,14 +5,19 @@ import game.graphics.GraphicsData;
 
 public abstract class Creature {
 
-    protected Vector2D oldPosition;
-    protected Vector2D position;
-    protected DNA dna;
-    protected int width, height;
+    private static int numberOfCreatures = 0;
 
-    public boolean graphicsChanged;
+    private int id;
+    Vector2D oldPosition;
+    Vector2D position;
+    DNA dna;
+    int width, height;
+
+    boolean graphicsChanged;
 
     public Creature(Vector2D position, int width, int height){
+
+        this.id = ++numberOfCreatures;
         this.position = new Vector2D(position);
         this.oldPosition = new Vector2D(position);
         this.dna = new DNA(width,height);
@@ -20,7 +25,7 @@ public abstract class Creature {
         this.height = height;
     }
 
-    public GraphicsData getGraphicsData(){
+    GraphicsData getGraphicsData(){
         byte[] image = new byte[width * height * 4];
 
         for (int i = 0; i < width; i++) {
@@ -36,35 +41,39 @@ public abstract class Creature {
         return new GraphicsData(getPixelPosX(),getPixelPosY(), width, height,image);
     }
 
+    int getId(){
+        return id;
+    }
+
     public Vector2D getOldPosition(){
         return oldPosition;
     }
 
-    public int getWidth(){
+    int getWidth(){
         return width;
     }
 
-    public int getHeight(){
+    int getHeight(){
         return height;
     }
 
-    public void useProperties(){
+    void useProperties(){
         dna.useProperties(this);
     }
 
-    public int getPixelPosX(){
+    int getPixelPosX(){
         return (int)Math.round(position.x);
     }
 
-    public int getPixelPosY(){
+    int getPixelPosY(){
         return (int)Math.round(position.y);
     }
 
-    public int getPixelOldPosX(){
+    int getPixelOldPosX(){
         return (int)Math.round(oldPosition.x);
     }
 
-    public int getPixelOldPosY(){
+    int getPixelOldPosY(){
         return (int)Math.round(oldPosition.y);
     }
 

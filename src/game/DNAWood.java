@@ -1,10 +1,8 @@
 package game;
 
-import datastructures.Vector2D;
-
 public class DNAWood extends DNAProperty{
 
-    public DNAWood() {
+    DNAWood() {
         super(0xFF6B2700);
     }
 
