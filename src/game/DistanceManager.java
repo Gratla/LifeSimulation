@@ -17,16 +17,19 @@ public class DistanceManager {
     private void addCreatures(ArrayList<Creature> creatures){
         for(Creature creature: creatures){
             nearestNeighbors.put(creature.getId(), new TreeMap<>());
-            addNearestNeighbors(creature, creatures);
         }
+        recalculateDistances(creatures);
     }
 
-    private void addNearestNeighbors(Creature currentCreature, ArrayList<Creature> creatures){
-        TreeMap<Double, Creature> currentTree = nearestNeighbors.get(currentCreature.getId());
+    public void recalculateDistances(ArrayList<Creature> creatures){
+        for(Creature currentCreature: creatures){
+            TreeMap<Double, Creature> currentTree = nearestNeighbors.get(currentCreature.getId());
+            currentTree.clear();
 
-        for(Creature creature: creatures){
-            if(creature.getId() != currentCreature.getId()){
-                currentTree.put(currentCreature.distance(creature), creature);
+            for(Creature creature: creatures){
+                if(creature.getId() != currentCreature.getId()){
+                    currentTree.put(currentCreature.distance(creature), creature);
+                }
             }
         }
     }

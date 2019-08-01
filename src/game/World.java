@@ -54,6 +54,7 @@ public class World {
                 preventBorderCrossing(creature);
             }
         }
+        distanceManager.recalculateDistances(creatures);
     }
 
     private void preventBorderCrossing(Creature creature){
