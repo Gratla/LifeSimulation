@@ -10,6 +10,7 @@ public abstract class Creature {
     private int id;
     Vector2D oldPosition;
     Vector2D position;
+    Mind mind;
     DNA dna;
     int width, height;
 
@@ -20,6 +21,7 @@ public abstract class Creature {
         this.id = ++numberOfCreatures;
         this.position = new Vector2D(position);
         this.oldPosition = new Vector2D(position);
+        this.mind = new Mind(new Vector2D(1,1));
         this.dna = new DNA(width,height);
         this.width = width;
         this.height = height;

@@ -39,7 +39,7 @@ public class GraphicsController {
 
     public GraphicsController(Stage primaryStage, Group root, World world) throws IOException {
 
-        this.frameRate = 30;
+        this.frameRate = 15;
         unitSize = 1;
         this.width = Main.WINDOW_WIDTH;
         this.height = Main.WINDOW_HEIGHT;
@@ -88,13 +88,9 @@ public class GraphicsController {
             for (int i = 0; i < graphicsData.width; i++) {
                 for (int j = 0; j < graphicsData.height; j++) {
                     for (int k = 0; k < 4; k++) {
-                        if(i+graphicsData.posX < width && j+graphicsData.posY < height && i+graphicsData.posX>0 && j+graphicsData.posY>0)
-                        imageInArray[(i+graphicsData.posX) * 4 + (j+graphicsData.posY) * width * 4 + k] = graphicsData.image[i * 4 + j * graphicsData.width * 4 + k];
+                        if(unitSize*(i+graphicsData.posX) < width && unitSize*(j+graphicsData.posY) < height && unitSize*(i+graphicsData.posX) > 0 && unitSize*(j+graphicsData.posY) > 0)
+                        imageInArray[(int)((unitSize*(i+graphicsData.posX)) * 4 + (unitSize*(j+graphicsData.posY)) * width * 4 + k)] = graphicsData.image[i * 4 + j * graphicsData.width * 4 + k];
                     }
-
-                    /*if(graphicsData.image[i][j] != null){
-                        pixelWriter.setColor(graphicsData.posX + i, graphicsData.posY + j, graphicsData.image[i][j]);
-                    }*/
                 }
             }
         }
