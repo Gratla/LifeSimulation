@@ -15,6 +15,7 @@ public class World {
     private int height;
     private Landscape landscape;
     private ArrayList<Creature> creatures;
+    private DistanceManager distanceManager;
 
     private Timeline timeline;
     private int stepRate;
@@ -31,6 +32,8 @@ public class World {
 
         spawnPlants(width*height/10000);
         spawnCreatures(width*height/20000);
+
+        distanceManager = new DistanceManager(creatures);
     }
 
     private void initTimeline(){

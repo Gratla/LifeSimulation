@@ -77,5 +77,11 @@ public abstract class Creature {
         return (int)Math.round(oldPosition.y);
     }
 
+    double distance(Creature creature){
+        double deltaX = this.position.x - creature.position.x;
+        double deltaY = this.position.y - creature.position.y;
+        return Math.sqrt(deltaX*deltaX + deltaY*deltaY);
+    }
+
 
 }
