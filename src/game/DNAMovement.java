@@ -8,7 +8,7 @@ public class DNAMovement extends DNAProperty {
     private double maxSpeed;
     private Vector2D acceleration;
 
-    public DNAMovement() {
+    DNAMovement() {
         super(0xFF000000);
 
         this.velocity = new Vector2D(Math.random()-0.5, Math.random()-0.5);
@@ -19,6 +19,8 @@ public class DNAMovement extends DNAProperty {
     }
 
     public void useProperty(Creature creature){
+        seek(creature);
+
         velocity.add(acceleration);
         limit(velocity);
         creature.position.add(velocity);
@@ -32,6 +34,12 @@ public class DNAMovement extends DNAProperty {
         desiredVelocity.normalize();
         desiredVelocity.multiply(maxSpeed);
 
+        Vector2D steering = Vector2D.subtract(desiredVelocity,velocity);
+        steering.normalize();
+        steering.multiply(maxSpeed/50);
+        //limit(steering);
+
+        acceleration.add(steering);
     }
 
     private void limit(Vector2D velocity){
