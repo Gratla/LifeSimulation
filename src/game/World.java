@@ -50,6 +50,7 @@ public class World {
     private void processChanges(){
         if(creatures.size() > 0){
             for(Creature creature: creatures){
+                creature.think(distanceManager);
                 creature.useProperties();
                 preventBorderCrossing(creature);
             }

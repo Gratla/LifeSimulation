@@ -30,16 +30,19 @@ public class DNAMovement extends DNAProperty {
     }
 
     private void seek(Creature creature){
-        Vector2D desiredVelocity = Vector2D.subtract(creature.mind.getDesiredPosition(), creature.position);
-        desiredVelocity.normalize();
-        desiredVelocity.multiply(maxSpeed);
+        Vector2D desiredPosition = creature.mind.getDesiredPosition();
+        if(desiredPosition != null){
+            Vector2D desiredVelocity = Vector2D.subtract(desiredPosition, creature.position);
+            desiredVelocity.normalize();
+            desiredVelocity.multiply(maxSpeed);
 
-        Vector2D steering = Vector2D.subtract(desiredVelocity,velocity);
-        steering.normalize();
-        steering.multiply(maxSpeed/50);
-        //limit(steering);
+            Vector2D steering = Vector2D.subtract(desiredVelocity,velocity);
+            steering.normalize();
+            steering.multiply(maxSpeed/50);
+            //limit(steering);
 
-        acceleration.add(steering);
+            acceleration = new Vector2D(steering);
+        }
     }
 
     private void limit(Vector2D velocity){

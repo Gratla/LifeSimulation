@@ -21,10 +21,10 @@ public abstract class Creature {
         this.id = ++numberOfCreatures;
         this.position = new Vector2D(position);
         this.oldPosition = new Vector2D(position);
-        this.mind = new Mind(new Vector2D(1,1));
         this.dna = new DNA(width,height);
         this.width = width;
         this.height = height;
+        this.mind = new Mind(this);
     }
 
     GraphicsData getGraphicsData(){
@@ -59,8 +59,16 @@ public abstract class Creature {
         return height;
     }
 
+    DNA getDna(){
+        return dna;
+    }
+
     void useProperties(){
         dna.useProperties(this);
+    }
+
+    void think(DistanceManager distanceManager){
+        mind.think(distanceManager);
     }
 
     int getPixelPosX(){

@@ -8,10 +8,9 @@ import java.util.TreeMap;
 public class DistanceManager {
     private HashMap<Integer,TreeMap<Double,Creature>> nearestNeighbors;
 
-    public DistanceManager(ArrayList<Creature> creatures){
+    DistanceManager(ArrayList<Creature> creatures){
         nearestNeighbors = new HashMap<>();
         addCreatures(creatures);
-        System.out.println(toString());
     }
 
     private void addCreatures(ArrayList<Creature> creatures){
@@ -21,7 +20,7 @@ public class DistanceManager {
         recalculateDistances(creatures);
     }
 
-    public void recalculateDistances(ArrayList<Creature> creatures){
+    void recalculateDistances(ArrayList<Creature> creatures){
         for(Creature currentCreature: creatures){
             TreeMap<Double, Creature> currentTree = nearestNeighbors.get(currentCreature.getId());
             currentTree.clear();
@@ -34,6 +33,24 @@ public class DistanceManager {
         }
     }
 
+    ArrayList<Creature> getAllCreaturesInRadius(Creature currentCreature, double r){
+        ArrayList<Creature> result = new ArrayList<>();
+        TreeMap<Double, Creature> currentTree = nearestNeighbors.get(currentCreature.getId());
+
+        for(Map.Entry<Double,Creature> treeEntry : currentTree.entrySet()) {
+            Double treeKey = treeEntry.getKey();
+            Creature treeValue = treeEntry.getValue();
+
+            if(treeKey <= r){
+                result.add(treeValue);
+            }
+            else {
+                break;
+            }
+        }
+        return result;
+    }
+
     @Override
     public String toString(){
         String output = "{";
@@ -43,11 +60,10 @@ public class DistanceManager {
             TreeMap<Double, Creature> value = entry.getValue();
             output += key + "[";
 
-            for(Map.Entry<Double,Creature> tree : value.entrySet()) {
-                Double treeKey = tree.getKey();
-                Creature treeValue = tree.getValue();
+            for(Map.Entry<Double,Creature> treeEntry : value.entrySet()) {
+                Double treeKey = treeEntry.getKey();
+                Creature treeValue = treeEntry.getValue();
                 output += treeKey + ",";
-                //System.out.println(key + " => " + value);
             }
 
             output += "],\n";
