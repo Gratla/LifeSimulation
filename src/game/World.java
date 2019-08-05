@@ -48,11 +48,22 @@ public class World {
     }
 
     private void processChanges(){
-        if(creatures.size() > 0){
+        ArrayList<Creature> deadCreatures = new ArrayList<>();
+        if(!creatures.isEmpty()){
             for(Creature creature: creatures){
-                creature.think(distanceManager);
-                creature.useProperties();
-                preventBorderCrossing(creature);
+                if(creature.isDead()){
+                    deadCreatures.add(creature);
+                }
+                else{
+                    creature.think(distanceManager);
+                    creature.useProperties();
+                    preventBorderCrossing(creature);
+                }
+            }
+        }
+        if(!deadCreatures.isEmpty()){
+            for(Creature creature: deadCreatures){
+                creatures.remove(creature);
             }
         }
         distanceManager.recalculateDistances(creatures);

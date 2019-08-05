@@ -14,6 +14,7 @@ public abstract class Creature {
     DNA dna;
     int width, height;
 
+    private boolean dead;
     boolean graphicsChanged;
 
     public Creature(Vector2D position, int width, int height){
@@ -25,6 +26,16 @@ public abstract class Creature {
         this.width = width;
         this.height = height;
         this.mind = new Mind(this);
+        this.dead = false;
+    }
+
+    public void underAttack(double damage){
+        dna.deleteRandomProperty();
+        dead = dna.isEmpty();
+    }
+
+    public boolean isDead(){
+        return dead;
     }
 
     GraphicsData getGraphicsData(){

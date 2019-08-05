@@ -20,6 +20,7 @@ public class Animal extends Creature {
             }
         }
         properties[0][0] = new DNAEyes();
+        properties[0][1] = new DNATeeth();
         dna.setProperties(properties);
     }
 }
