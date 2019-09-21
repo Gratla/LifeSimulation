@@ -7,15 +7,29 @@ import java.util.ArrayList;
 public class Mind {
     private Creature creature;
     private Vector2D desiredPosition;
+    private Vector2D idleDirection;
     private Creature target;
+
+    private int thinkCounter;
+
+    private int rethinkIdleDirectionLimit;
 
     Mind(Creature creature){
         this.creature = creature;
         this.desiredPosition = new Vector2D(1,1);
+        this.idleDirection = new Vector2D(1,1);
+
+        this.thinkCounter = 0;
+        this.rethinkIdleDirectionLimit = 1000;
     }
 
     public void think(DistanceManager distanceManager){
         int numberOfEyesDNA = creature.getDna().getNumberOfDNAProperties(DNAEyes.class);
+
+        if(thinkCounter%rethinkIdleDirectionLimit == 0){
+            idleDirection = getNewIdleDirection();
+        }
+
         if(numberOfEyesDNA > 0){
             ArrayList<Creature> nearestNeighbors = distanceManager.getAllCreaturesInRadius(creature, numberOfEyesDNA*10);
 
@@ -23,7 +37,7 @@ public class Mind {
                 desiredPosition = new Vector2D(nearestNeighbors.get(0).position);
             }
             else {
-                desiredPosition = null;
+                desiredPosition = new Vector2D(Vector2D.add(creature.position,idleDirection));
             }
         }
 
@@ -38,6 +52,14 @@ public class Mind {
                 target = null;
             }
         }
+
+        thinkCounter++;
+    }
+
+    private Vector2D getNewIdleDirection() {
+        double angle = Math.random() * Math.PI;
+        System.out.println("test");
+        return Vector2D.toCartesian(1, angle);
     }
 
     public Vector2D getDesiredPosition(){
