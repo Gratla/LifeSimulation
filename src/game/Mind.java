@@ -20,7 +20,7 @@ public class Mind {
         this.idleDirection = new Vector2D(1,1);
 
         this.thinkCounter = 0;
-        this.rethinkIdleDirectionLimit = 1000;
+        this.rethinkIdleDirectionLimit = 50;
     }
 
     public void think(DistanceManager distanceManager){
@@ -58,7 +58,6 @@ public class Mind {
 
     private Vector2D getNewIdleDirection() {
         double angle = Math.random() * Math.PI;
-        System.out.println("test");
         return Vector2D.toCartesian(1, angle);
     }
 
