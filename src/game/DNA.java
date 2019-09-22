@@ -2,21 +2,25 @@ package game;
 
 public class DNA {
 
+    private Creature creature;
     private DNAProperty[][] adultProperties;
     private DNAProperty[][] childProperties;
     private DNAProperty[][] properties;
     private int width;
     private int height;
+    private double growProbability;
 
     private boolean isAdult;
 
-    DNA(int width, int height){
+    DNA(Creature creature, int width, int height){
+        this.creature = creature;
         adultProperties = new DNAProperty[width][height];
         childProperties = new DNAProperty[width][height];
         properties = new DNAProperty[width][height];
         this.width = width;
         this.height = height;
         this.isAdult = false;
+        this.growProbability = 0.001;
     }
 
     /*public void createRandomProperties(){
@@ -104,9 +108,9 @@ public class DNA {
 
     public void setIsAdult(){
         boolean adultFlag = true;
-        for (int i = 0; i < width; i++) {
+        for (int i = 0; i < width && adultFlag; i++) {
             for (int j = 0; j < height; j++) {
-                if(!properties[i][j].getClass().equals(adultProperties[i][j].getClass())){
+                if((properties[i][j] != null && !properties[i][j].getClass().equals(adultProperties[i][j].getClass())) || properties[i][j] != adultProperties[i][j]){
                     adultFlag = false;
                     break;
                 }
@@ -122,8 +126,19 @@ public class DNA {
 
     public void grow(){
         setIsAdult();
-        if(!isAdult){
-            //grow!!! Mit Chance!
+        if(!isAdult && Math.random() < growProbability){
+            boolean exitFlag = false;
+            for (int i = 0; i < width && !exitFlag; i++) {
+                for (int j = 0; j < height; j++) {
+                    if((properties[i][j] != null && !properties[i][j].getClass().equals(adultProperties[i][j].getClass())) || properties[i][j] != adultProperties[i][j]){
+                        System.out.println("grow!");
+                        properties[i][j] = adultProperties[i][j];
+                        exitFlag = true;
+                        creature.graphicsChanged = true;
+                        break;
+                    }
+                }
+            }
         }
     }
 }

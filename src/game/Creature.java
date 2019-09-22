@@ -22,7 +22,7 @@ public abstract class Creature {
         this.id = ++numberOfCreatures;
         this.position = new Vector2D(position);
         this.oldPosition = new Vector2D(position);
-        this.dna = new DNA(width,height);
+        this.dna = new DNA(this, width,height);
         this.width = width;
         this.height = height;
         this.mind = new Mind(this);

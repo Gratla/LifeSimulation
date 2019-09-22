@@ -40,6 +40,9 @@ public class Mind {
                 desiredPosition = new Vector2D(Vector2D.add(creature.position,idleDirection));
             }
         }
+        else{
+            desiredPosition = new Vector2D(Vector2D.add(creature.position,idleDirection));
+        }
 
         int numberOfTeethDNA = creature.getDna().getNumberOfDNAProperties(DNATeeth.class);
         if(numberOfTeethDNA > 0){
@@ -57,7 +60,7 @@ public class Mind {
     }
 
     private Vector2D getNewIdleDirection() {
-        double angle = Math.random() * Math.PI;
+        double angle = Math.random() * Math.PI * 2;
         return Vector2D.toCartesian(1, angle);
     }
 

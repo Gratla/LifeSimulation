@@ -11,19 +11,22 @@ class Plant extends Creature{
     }
 
     private void setProperties(){
-        DNAProperty[][] properties = new DNAProperty[width][height];
+        DNAProperty[][] adultProperties = new DNAProperty[width][height];
+        DNAProperty[][] childProperties = new DNAProperty[width][height];
+
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 if(i < width/4 || i > 3*width/4 || j < height/4 || j > 3*height/4){
-                    properties[i][j] = new DNALeaf();
+                    adultProperties[i][j] = new DNALeaf();
                 }
                 else{
-                    properties[i][j] = new DNAWood();
+                    adultProperties[i][j] = new DNAWood();
+                    childProperties[i][j] = new DNAWood();
                 }
             }
         }
-        dna.setAdultProperties(properties);
-        dna.setChildProperties(properties);
+        dna.setAdultProperties(adultProperties);
+        dna.setChildProperties(childProperties);
         dna.copyChildProperties();
     }
 }

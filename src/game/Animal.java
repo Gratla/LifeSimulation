@@ -12,18 +12,22 @@ public class Animal extends Creature {
     }
 
     private void setProperties(){
-        DNAProperty[][] properties = new DNAProperty[width][height];
+        DNAProperty[][] adultProperties = new DNAProperty[width][height];
+        DNAProperty[][] childProperties = new DNAProperty[width][height];
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                properties[i][j] = new DNAMovement();
+                adultProperties[i][j] = new DNAMovement();
             }
         }
-        properties[0][0] = new DNAEyes();
-        properties[0][1] = new DNATeeth();
+        adultProperties[0][0] = new DNAEyes();
+        adultProperties[0][1] = new DNATeeth();
 
-        dna.setAdultProperties(properties);
-        dna.setChildProperties(properties);
+        childProperties[1][0] = new DNAMovement();
+        childProperties[1][1] = new DNAMovement();
+
+        dna.setAdultProperties(adultProperties);
+        dna.setChildProperties(childProperties);
         dna.copyChildProperties();
     }
 }
