@@ -3,15 +3,20 @@ package game;
 public class DNA {
 
     private DNAProperty[][] adultProperties;
+    private DNAProperty[][] childProperties;
     private DNAProperty[][] properties;
     private int width;
     private int height;
 
+    private boolean isAdult;
+
     DNA(int width, int height){
         adultProperties = new DNAProperty[width][height];
+        childProperties = new DNAProperty[width][height];
         properties = new DNAProperty[width][height];
         this.width = width;
         this.height = height;
+        this.isAdult = false;
     }
 
     /*public void createRandomProperties(){
@@ -26,8 +31,20 @@ public class DNA {
         this.adultProperties = properties;
     }
 
+    void setChildProperties(DNAProperty[][] properties) {
+        this.childProperties = properties;
+    }
+
     void setProperties(DNAProperty[][] properties) {
         this.properties = properties;
+    }
+
+    void copyChildProperties(){
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                properties[i][j] = childProperties[i][j];
+            }
+        }
     }
 
     void useProperties(Creature creature){
@@ -83,5 +100,30 @@ public class DNA {
         }
 
         return true;
+    }
+
+    public void setIsAdult(){
+        boolean adultFlag = true;
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if(!properties[i][j].getClass().equals(adultProperties[i][j].getClass())){
+                    adultFlag = false;
+                    break;
+                }
+            }
+        }
+
+        isAdult = adultFlag;
+    }
+
+    public boolean isAdult() {
+        return isAdult;
+    }
+
+    public void grow(){
+        setIsAdult();
+        if(!isAdult){
+            //grow!!! Mit Chance!
+        }
     }
 }

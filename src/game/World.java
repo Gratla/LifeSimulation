@@ -56,7 +56,7 @@ public class World {
                 }
                 else{
                     creature.think(distanceManager);
-                    creature.useProperties();
+                    creature.processDNA();
                     preventBorderCrossing(creature);
                 }
             }

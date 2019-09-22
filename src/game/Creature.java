@@ -74,7 +74,10 @@ public abstract class Creature {
         return dna;
     }
 
-    void useProperties(){
+    void processDNA(){
+        if(!dna.isAdult()){
+            dna.grow();
+        }
         dna.useProperties(this);
     }
 

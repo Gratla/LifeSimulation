@@ -22,6 +22,8 @@ class Plant extends Creature{
                 }
             }
         }
-        dna.setProperties(properties);
+        dna.setAdultProperties(properties);
+        dna.setChildProperties(properties);
+        dna.copyChildProperties();
     }
 }
