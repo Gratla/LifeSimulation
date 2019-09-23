@@ -82,15 +82,28 @@ public class GraphicsController {
     }
 
     private void loadGraphicsData(){
-
+        boolean drawBackground = false;
         allGraphicsData = world.getAllGraphicsData();
         for(GraphicsData graphicsData: allGraphicsData) {
             for (int i = 0; i < graphicsData.width; i++) {
                 for (int j = 0; j < graphicsData.height; j++) {
                     for (int k = 0; k < 4; k++) {
-                        if(unitSize*(i+graphicsData.posX) < width && unitSize*(j+graphicsData.posY) < height && unitSize*(i+graphicsData.posX) > 0 && unitSize*(j+graphicsData.posY) > 0)
-                        imageInArray[(int)((unitSize*(i+graphicsData.posX)) * 4 + (unitSize*(j+graphicsData.posY)) * width * 4 + k)] = graphicsData.image[i * 4 + j * graphicsData.width * 4 + k];
+                        if(unitSize*(i+graphicsData.posX) < width && unitSize*(j+graphicsData.posY) < height && unitSize*(i+graphicsData.posX) > 0 && unitSize*(j+graphicsData.posY) > 0){
+                            if(k == 0 && graphicsData.image[i * 4 + j * graphicsData.width * 4 + 3] == 0){
+                                drawBackground = true;
+                            }
+
+                            if(!drawBackground){
+                                imageInArray[(int)((unitSize*(i+graphicsData.posX)) * 4 + (unitSize*(j+graphicsData.posY)) * width * 4 + k)] = graphicsData.image[i * 4 + j * graphicsData.width * 4 + k];
+                            }
+                            else{
+                                //imageInArray[(int)((unitSize*(i+graphicsData.posX)) * 4 + (unitSize*(j+graphicsData.posY)) * width * 4 + k)] = (byte)(world.getGroundColor(i,j)<<k*2);
+                                imageInArray[(int)((unitSize*(i+graphicsData.posX)) * 4 + (unitSize*(j+graphicsData.posY)) * width * 4 + k)] = (byte)((world.getGroundColor(i,j) >>> (k * 8))  & (0x000000FF));
+                            }
+
+                        }
                     }
+                    drawBackground = false;
                 }
             }
         }

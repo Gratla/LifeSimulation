@@ -150,4 +150,8 @@ public class World {
 
         return result;
     }
+
+    public int getGroundColor(int x, int y){
+        return landscape.getGroundColor(x,y);
+    }
 }

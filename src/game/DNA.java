@@ -131,7 +131,6 @@ public class DNA {
             for (int i = 0; i < width && !exitFlag; i++) {
                 for (int j = 0; j < height; j++) {
                     if((properties[i][j] != null && !properties[i][j].getClass().equals(adultProperties[i][j].getClass())) || properties[i][j] != adultProperties[i][j]){
-                        System.out.println("grow!");
                         properties[i][j] = adultProperties[i][j];
                         exitFlag = true;
                         break;
