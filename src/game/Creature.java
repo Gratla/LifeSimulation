@@ -15,7 +15,6 @@ public abstract class Creature {
     int width, height;
 
     private boolean dead;
-    boolean graphicsChanged;
 
     public Creature(Vector2D position, int width, int height){
 

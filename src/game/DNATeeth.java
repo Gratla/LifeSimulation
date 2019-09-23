@@ -16,7 +16,6 @@ public class DNATeeth extends DNAProperty {
 
         if(target != null && cooldown <= 0){
             target.underAttack(damage);
-            target.graphicsChanged = true;
             cooldown = 25;
         }
         else if(cooldown > 0){

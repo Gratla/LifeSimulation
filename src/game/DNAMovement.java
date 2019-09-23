@@ -25,8 +25,6 @@ public class DNAMovement extends DNAProperty {
         limit(velocity);
         creature.position.add(velocity);
         acceleration.multiply(0);
-
-        creature.graphicsChanged = true;
     }
 
     private void seek(Creature creature){

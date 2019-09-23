@@ -134,7 +134,6 @@ public class DNA {
                         System.out.println("grow!");
                         properties[i][j] = adultProperties[i][j];
                         exitFlag = true;
-                        creature.graphicsChanged = true;
                         break;
                     }
                 }

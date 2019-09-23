@@ -7,7 +7,6 @@ class Plant extends Creature{
     Plant(int posX, int posY){
         super(new Vector2D(posX,posY), 5, 5);
         setProperties();
-        this.graphicsChanged = true;
     }
 
     private void setProperties(){

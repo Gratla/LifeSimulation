@@ -8,7 +8,6 @@ public class Animal extends Creature {
     Animal(int posX, int posY){
         super(new Vector2D(posX,posY), 2, 2);
         setProperties();
-        this.graphicsChanged = true;
     }
 
     private void setProperties(){

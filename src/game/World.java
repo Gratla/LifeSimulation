@@ -119,10 +119,7 @@ public class World {
 
         if(creatures.size()>0){
             for(Creature creature: creatures){
-                if(creature.graphicsChanged){
-                    result.add(creature.getGraphicsData());
-                    creature.graphicsChanged = false;
-                }
+                result.add(creature.getGraphicsData());
             }
         }
 
@@ -134,7 +131,6 @@ public class World {
 
         if(creatures.size()>0){
             for(Creature creature: creatures){
-                if(creature.graphicsChanged){
                     byte[] image = new byte[creature.width * creature.height *4];
 
                     for (int i = 0; i < creature.width; i++) {
@@ -149,7 +145,6 @@ public class World {
                     }
                     result.add(new GraphicsData(creature.getPixelOldPosX(),creature.getPixelOldPosY(), creature.width, creature.height,image));
                     creature.oldPosition = new Vector2D(creature.position);
-                }
             }
         }
 
