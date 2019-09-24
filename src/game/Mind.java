@@ -9,10 +9,13 @@ public class Mind {
     private Vector2D desiredPosition;
     private Vector2D idleDirection;
     private Creature target;
+    private Creature partner;
 
     private int thinkCounter;
 
     private int rethinkIdleDirectionLimit;
+    private int partnerlockCooldown;
+    private double reproductionProbability;
 
     Mind(Creature creature){
         this.creature = creature;
@@ -21,14 +24,36 @@ public class Mind {
 
         this.thinkCounter = 0;
         this.rethinkIdleDirectionLimit = 50;
+        this.reproductionProbability = 0.5;
+        this.partnerlockCooldown = 0;
     }
 
     public void think(DistanceManager distanceManager){
-        int numberOfEyesDNA = creature.getDna().getNumberOfDNAProperties(DNAEyes.class);
+        ArrayList<Creature> possiblePartners = distanceManager.getAllCreaturesInRadius(creature, 15);
+
+        if(!possiblePartners.isEmpty() && partnerlockCooldown == 0){
+            int partnerIndex = (int)(Math.random() * possiblePartners.size());
+            partner = possiblePartners.get(partnerIndex);
+            partnerlockCooldown = 1000;
+        }
+        else if(possiblePartners.isEmpty()){
+            partner = null;
+        }
+
+        if(checkPartners(creature, partner)){
+            if(Math.random() < reproductionProbability){
+                creature.reproduce();
+            }
+            partnerlockCooldown = 2000;
+            partner.mind.partner = null;
+            partner = null;
+        }
 
         if(thinkCounter%rethinkIdleDirectionLimit == 0){
             idleDirection = getNewIdleDirection();
         }
+
+        int numberOfEyesDNA = creature.getDna().getNumberOfDNAProperties(DNAEyes.class);
 
         if(numberOfEyesDNA > 0){
             ArrayList<Creature> nearestNeighbors = distanceManager.getAllCreaturesInRadius(creature, numberOfEyesDNA*10);
@@ -56,6 +81,8 @@ public class Mind {
             }
         }
 
+        if(partnerlockCooldown > 0) partnerlockCooldown--;
+
         thinkCounter++;
     }
 
@@ -70,5 +97,13 @@ public class Mind {
 
     public Creature getTarget(){
         return target;
+    }
+
+    public static boolean checkPartners(Creature c1, Creature c2){
+        if(c1 != null && c2 != null){
+            return c1 == c2.mind.partner && c1.mind.partner == c2;
+        }
+
+        return false;
     }
 }

@@ -39,7 +39,7 @@ public class GraphicsController {
 
     public GraphicsController(Stage primaryStage, Group root, World world) throws IOException {
 
-        this.frameRate = 15;
+        this.frameRate = 30;
         unitSize = 1;
         this.width = Main.WINDOW_WIDTH;
         this.height = Main.WINDOW_HEIGHT;

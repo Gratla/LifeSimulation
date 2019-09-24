@@ -25,7 +25,7 @@ public class World {
         this.height = height;
         this.landscape = new Landscape(width, height);
 
-        this.stepRate = 100;
+        this.stepRate = 10;
         initTimeline();
 
         creatures = new ArrayList<>();

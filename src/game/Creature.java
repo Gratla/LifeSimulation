@@ -33,6 +33,10 @@ public abstract class Creature {
         dead = dna.isEmpty();
     }
 
+    public void reproduce(){
+        System.out.println("reproduce");
+    }
+
     public boolean isDead(){
         return dead;
     }
