@@ -9,6 +9,16 @@ class Plant extends Creature{
         setProperties();
     }
 
+    Plant(Vector2D position){
+        super(position, 5, 5);
+        setProperties();
+    }
+
+
+    public Creature createCreature(Vector2D position, int width, int height){
+        return new Plant(position);
+    }
+
     private void setProperties(){
         DNAProperty[][] adultProperties = new DNAProperty[width][height];
         DNAProperty[][] childProperties = new DNAProperty[width][height];

@@ -11,13 +11,13 @@ public class DistanceManager {
     DistanceManager(ArrayList<Creature> creatures){
         nearestNeighbors = new HashMap<>();
         addCreatures(creatures);
+        recalculateDistances(creatures);
     }
 
-    private void addCreatures(ArrayList<Creature> creatures){
+    public void addCreatures(ArrayList<Creature> creatures){
         for(Creature creature: creatures){
             nearestNeighbors.put(creature.getId(), new TreeMap<>());
         }
-        recalculateDistances(creatures);
     }
 
     void recalculateDistances(ArrayList<Creature> creatures){

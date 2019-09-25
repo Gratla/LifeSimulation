@@ -10,6 +10,15 @@ public class Animal extends Creature {
         setProperties();
     }
 
+    Animal(Vector2D position){
+        super(position, 2, 2);
+        setProperties();
+    }
+
+    public Creature createCreature(Vector2D position, int width, int height){
+        return new Animal(position);
+    }
+
     private void setProperties(){
         DNAProperty[][] adultProperties = new DNAProperty[width][height];
         DNAProperty[][] childProperties = new DNAProperty[width][height];

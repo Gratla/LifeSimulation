@@ -49,6 +49,7 @@ public class World {
 
     private void processChanges(){
         ArrayList<Creature> deadCreatures = new ArrayList<>();
+        ArrayList<Creature> children = new ArrayList<>();
         if(!creatures.isEmpty()){
             for(Creature creature: creatures){
                 if(creature.isDead()){
@@ -57,6 +58,10 @@ public class World {
                 else{
                     creature.think(distanceManager);
                     creature.processDNA();
+                    Creature child = creature.reproduce();
+                    if(child != null){
+                        children.add(child);
+                    }
                     preventBorderCrossing(creature);
                 }
             }
@@ -66,6 +71,9 @@ public class World {
                 creatures.remove(creature);
             }
         }
+
+        creatures.addAll(children);
+        distanceManager.addCreatures(children);
         distanceManager.recalculateDistances(creatures);
     }
 

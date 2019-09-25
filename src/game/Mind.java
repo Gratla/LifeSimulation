@@ -40,15 +40,6 @@ public class Mind {
             partner = null;
         }
 
-        if(checkPartners(creature, partner)){
-            if(Math.random() < reproductionProbability){
-                creature.reproduce();
-            }
-            partnerlockCooldown = 2000;
-            partner.mind.partner = null;
-            partner = null;
-        }
-
         if(thinkCounter%rethinkIdleDirectionLimit == 0){
             idleDirection = getNewIdleDirection();
         }
@@ -99,9 +90,20 @@ public class Mind {
         return target;
     }
 
+    public Creature tryReporduction(){
+        if(checkPartners(creature, partner) && Math.random() < reproductionProbability){
+            partnerlockCooldown = 2000;
+            partner.mind.partner = null;
+            partner = null;
+            return creature.createCreature(Vector2D.add(creature.position, Vector2D.toCartesian(1, Math.random() * Math.PI * 2)), creature.getWidth(), creature.getHeight());
+        }
+        return null;
+    }
+
     public static boolean checkPartners(Creature c1, Creature c2){
         if(c1 != null && c2 != null){
             return c1 == c2.mind.partner && c1.mind.partner == c2;
+            //return c1 == c2.mind.partner && c1.mind.partner == c2 && c1.dna.isAdult() && c2.dna.isAdult();
         }
 
         return false;

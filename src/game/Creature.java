@@ -28,13 +28,17 @@ public abstract class Creature {
         this.dead = false;
     }
 
+    public Creature createCreature(Vector2D position, int width, int height){
+        return null;
+    }
+
     public void underAttack(double damage){
         dna.deleteRandomProperty();
         dead = dna.isEmpty();
     }
 
-    public void reproduce(){
-        System.out.println("reproduce");
+    public Creature reproduce(){
+        return mind.tryReporduction();
     }
 
     public boolean isDead(){
