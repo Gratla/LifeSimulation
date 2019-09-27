@@ -13,6 +13,7 @@ public abstract class Creature {
     Mind mind;
     DNA dna;
     int width, height;
+    double mutationRate;
 
     private boolean dead;
 
@@ -24,8 +25,13 @@ public abstract class Creature {
         this.dna = new DNA(this, width,height);
         this.width = width;
         this.height = height;
+        this.mutationRate = 0.03;
         this.mind = new Mind(this);
         this.dead = false;
+    }
+
+    public static Creature createChild(Creature c1, Creature c2){
+        return null;
     }
 
     public Creature createCreature(Vector2D position, int width, int height){

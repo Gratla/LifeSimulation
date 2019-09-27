@@ -51,6 +51,20 @@ public class DNA {
         }
     }
 
+    DNAProperty getAdultProperty(int x, int y){
+        if(x >= 0 && x < width && y >= 0 && y < height){
+            return adultProperties[x][y];
+        }
+        return null;
+    }
+
+    DNAProperty getChildProperty(int x, int y){
+        if(x >= 0 && x < width && y >= 0 && y < height){
+            return childProperties[x][y];
+        }
+        return null;
+    }
+
     void useProperties(Creature creature){
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
