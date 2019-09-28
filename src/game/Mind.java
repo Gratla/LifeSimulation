@@ -15,6 +15,7 @@ public class Mind {
 
     private int rethinkIdleDirectionLimit;
     private int partnerlockCooldown;
+    private int desiredPositionlockCooldown;
     private double reproductionProbability;
 
     Mind(Creature creature){
@@ -26,6 +27,7 @@ public class Mind {
         this.rethinkIdleDirectionLimit = 50;
         this.reproductionProbability = 0.5;
         this.partnerlockCooldown = 0;
+        this.desiredPositionlockCooldown = 0;
     }
 
     public void think(DistanceManager distanceManager){
@@ -49,10 +51,11 @@ public class Mind {
         if(numberOfEyesDNA > 0){
             ArrayList<Creature> nearestNeighbors = distanceManager.getAllCreaturesInRadius(creature, numberOfEyesDNA*10);
 
-            if(!nearestNeighbors.isEmpty()){
+            if(!nearestNeighbors.isEmpty() && desiredPositionlockCooldown <= 0){
                 desiredPosition = new Vector2D(nearestNeighbors.get(0).position);
+                desiredPositionlockCooldown = 100;
             }
-            else {
+            else if(desiredPosition != null && Vector2D.subtract(desiredPosition, creature.position).getLength() < 5) {
                 desiredPosition = new Vector2D(Vector2D.add(creature.position,idleDirection));
             }
         }
@@ -73,6 +76,7 @@ public class Mind {
         }
 
         if(partnerlockCooldown > 0) partnerlockCooldown--;
+        if(desiredPositionlockCooldown > 0) desiredPositionlockCooldown--;
 
         thinkCounter++;
     }
