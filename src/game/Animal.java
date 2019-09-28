@@ -15,22 +15,22 @@ public class Animal extends Creature {
         setProperties();
     }
 
-    public static Creature createChild(Creature c1, Creature c2){
-        Creature child = new Animal(new Vector2D((c1.position.x + c2.position.x)/2, (c1.position.y + c2.position.y)/2));
+    public Creature createChild(Creature partner){
+        Creature child = new Animal(new Vector2D((position.x + partner.position.x)/2, (position.y + partner.position.y)/2));
         int childWidth, childHeight;
 
         if(Math.random() < 0.5){
-            childWidth = c1.getWidth() + (int)(-1 + Math.random() * 2);
+            childWidth = getWidth() + (int)(-1 + Math.random() * 2);
         }
         else{
-            childWidth = c2.getWidth() + (int)(-1 + Math.random() * 2);
+            childWidth = partner.getWidth() + (int)(-1 + Math.random() * 2);
         }
 
         if(Math.random() < 0.5){
-            childHeight = c1.getHeight() + (int)(-1 + Math.random() * 2);
+            childHeight = getHeight() + (int)(-1 + Math.random() * 2);
         }
         else{
-            childHeight = c2.getHeight() + (int)(-1 + Math.random() * 2);
+            childHeight = partner.getHeight() + (int)(-1 + Math.random() * 2);
         }
 
         DNAProperty[][] adultProperties = new DNAProperty[childWidth][childHeight];
@@ -38,13 +38,13 @@ public class Animal extends Creature {
 
         for (int i = 0; i < childWidth; i++) {
             for (int j = 0; j < childHeight; j++) {
-                if(Math.random() < 0.5 && i < c1.getWidth() && j < c1.getHeight()){
-                    adultProperties[i][j] = c1.dna.getAdultProperty(i,j);
-                    childProperties[i][j] = c1.dna.getChildProperty(i,j);
+                if(Math.random() < 0.5 && i < getWidth() && j < getHeight()){
+                    adultProperties[i][j] = dna.getAdultProperty(i,j);
+                    childProperties[i][j] = dna.getChildProperty(i,j);
                 }
-                else if(i < c2.getWidth() && j < c2.getHeight()){
-                    adultProperties[i][j] = c2.dna.getAdultProperty(i,j);
-                    childProperties[i][j] = c2.dna.getChildProperty(i,j);
+                else if(i < partner.getWidth() && j < partner.getHeight()){
+                    adultProperties[i][j] = partner.dna.getAdultProperty(i,j);
+                    childProperties[i][j] = partner.dna.getChildProperty(i,j);
                 }
 
                 if(Math.random() < child.mutationRate){

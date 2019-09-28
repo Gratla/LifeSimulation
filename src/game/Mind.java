@@ -92,10 +92,12 @@ public class Mind {
 
     public Creature tryReporduction(){
         if(checkPartners(creature, partner) && Math.random() < reproductionProbability){
+            Creature child = creature.createChild(partner);
             partnerlockCooldown = 2000;
             partner.mind.partner = null;
             partner = null;
-            return creature.createCreature(Vector2D.add(creature.position, Vector2D.toCartesian(1, Math.random() * Math.PI * 2)), creature.getWidth(), creature.getHeight());
+
+            return child;
         }
         return null;
     }

@@ -30,7 +30,7 @@ public abstract class Creature {
         this.dead = false;
     }
 
-    public static Creature createChild(Creature c1, Creature c2){
+    public Creature createChild(Creature partner){
         return null;
     }
 
