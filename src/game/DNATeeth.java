@@ -15,8 +15,8 @@ public class DNATeeth extends DNAProperty {
         Creature target = creature.mind.getTarget();
 
         if(target != null && cooldown <= 0){
-            target.underAttack(damage);
-            cooldown = 25;
+            //target.underAttack(damage);
+            cooldown = 100;
         }
         else if(cooldown > 0){
             cooldown--;

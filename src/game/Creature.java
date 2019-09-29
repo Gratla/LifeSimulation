@@ -25,7 +25,7 @@ public abstract class Creature {
         this.dna = new DNA(this, width,height);
         this.width = width;
         this.height = height;
-        this.mutationRate = 0.03;
+        this.mutationRate = 0.5;
         this.mind = new Mind(this);
         this.dead = false;
     }

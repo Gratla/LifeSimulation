@@ -32,6 +32,8 @@ public class Animal extends Creature {
         else{
             childHeight = partner.getHeight() + (int)(-1 + Math.random() * 2);
         }
+        if(childWidth < 1)childWidth = 1;
+        if(childHeight < 1)childHeight = 1;
 
         DNAProperty[][] adultProperties = new DNAProperty[childWidth][childHeight];
         DNAProperty[][] childProperties = new DNAProperty[childWidth][childHeight];
@@ -48,7 +50,15 @@ public class Animal extends Creature {
                 }
 
                 if(Math.random() < child.mutationRate){
-                    //Mutate
+                    DNAProperty mutatedProperty = DNAProperty.getRandomAnimalProperty();
+                    adultProperties[i][j] = mutatedProperty;
+
+                    if(Math.random() < 0.3){
+                        childProperties[i][j] = mutatedProperty;
+                    }
+                    else{
+                        childProperties[i][j] = null;
+                    }
                 }
             }
         }
