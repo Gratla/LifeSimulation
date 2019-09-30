@@ -10,13 +10,12 @@ public class Animal extends Creature {
         setProperties();
     }
 
-    Animal(Vector2D position){
-        super(position, 2, 2);
+    Animal(Vector2D position, int width, int height){
+        super(position, width, height);
         setProperties();
     }
 
     public Creature createChild(Creature partner){
-        Creature child = new Animal(new Vector2D((position.x + partner.position.x)/2, (position.y + partner.position.y)/2));
         int childWidth, childHeight;
 
         if(Math.random() < 0.5){
@@ -34,6 +33,8 @@ public class Animal extends Creature {
         }
         if(childWidth < 1)childWidth = 1;
         if(childHeight < 1)childHeight = 1;
+
+        Creature child = new Animal(new Vector2D((position.x + partner.position.x)/2, (position.y + partner.position.y)/2), childWidth, childHeight);
 
         DNAProperty[][] adultProperties = new DNAProperty[childWidth][childHeight];
         DNAProperty[][] childProperties = new DNAProperty[childWidth][childHeight];
@@ -62,11 +63,14 @@ public class Animal extends Creature {
                 }
             }
         }
+        dna.setAdultProperties(adultProperties);
+        dna.setChildProperties(childProperties);
+        dna.copyChildProperties();
         return child;
     }
 
     public Creature createCreature(Vector2D position, int width, int height){
-        return new Animal(position);
+        return new Animal(position, width, height);
     }
 
     private void setProperties(){
