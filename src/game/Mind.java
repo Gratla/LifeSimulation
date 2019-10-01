@@ -107,9 +107,9 @@ public class Mind {
     }
 
     public static boolean checkPartners(Creature c1, Creature c2){
-        if(c1 != null && c2 != null){
-            return c1 == c2.mind.partner && c1.mind.partner == c2;
-            //return c1 == c2.mind.partner && c1.mind.partner == c2 && c1.dna.isAdult() && c2.dna.isAdult();
+        if(c1 != null && c2 != null && c1.getClass() == c2.getClass()){
+            //return c1 == c2.mind.partner && c1.mind.partner == c2;
+            return c1 == c2.mind.partner && c1.mind.partner == c2 && c1.dna.isAdult() && c2.dna.isAdult();
         }
 
         return false;
