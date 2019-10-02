@@ -1,5 +1,6 @@
 package game.graphics;
 
+import game.Menu;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -10,17 +11,17 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.PixelFormat;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import javafx.scene.paint.Color;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.Stage;
 
 import game.World;
-import javafx.stage.Window;
 import javafx.util.Duration;
 import sample.Main;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class GraphicsController {
 
@@ -29,6 +30,7 @@ public class GraphicsController {
     private int width;
     private int height;
     private byte[] imageInArray;
+    private boolean menuActive;
 
     private Canvas canvas;
     private GraphicsContext graphicsContext;
@@ -36,6 +38,7 @@ public class GraphicsController {
     private Timeline timeline;
     private World world;
     private ArrayList<GraphicsData> allGraphicsData;
+    private Menu menu;
 
     public GraphicsController(Stage primaryStage, Group root, World world) throws IOException {
 
@@ -50,16 +53,33 @@ public class GraphicsController {
         pixelWriter = graphicsContext.getPixelWriter();
         this.world = world;
 
+        this.menu = new Menu(world);
+
         root.getChildren().add(canvas);
         primaryStage.setTitle("Life Simulation");
 
         Scene scene = new Scene(root, width, height);
+        setInputHandler(scene);
         primaryStage.setScene(scene);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
         initTimeline();
 
         primaryStage.show();
+    }
+
+    private void setInputHandler(Scene scene) {
+        KeyCombination esc = new KeyCodeCombination(KeyCode.ESCAPE);
+        scene.setOnKeyPressed(event -> {
+            if(esc.match(event)){
+                if(menuActive){
+                    menuActive = false;
+                }
+                else{
+                    menuActive = true;
+                }
+            }
+        });
     }
 
     public void initTimeline(){
@@ -79,6 +99,10 @@ public class GraphicsController {
         WritableImage image = new WritableImage(width, height);
         image.getPixelWriter().setPixels(0, 0, width, height, PixelFormat.getByteBgraInstance(), imageInArray, 0, width * 4);
         graphicsContext.drawImage(image, 0, 0);
+
+        if(menuActive){
+            menu.draw();
+        }
     }
 
     private void loadGraphicsData(){
