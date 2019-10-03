@@ -19,17 +19,17 @@ public class Animal extends Creature {
         int childWidth, childHeight;
 
         if(Math.random() < 0.5){
-            childWidth = getWidth() + (int)(-1 + Math.random() * 2);
+            childWidth = (int) (getWidth() + Math.round(-1 + Math.random() * 3));
         }
         else{
-            childWidth = partner.getWidth() + (int)(-1 + Math.random() * 2);
+            childWidth = (int) (partner.getWidth() + Math.round(-1 + Math.random() * 3));
         }
 
         if(Math.random() < 0.5){
-            childHeight = getHeight() + (int)(-1 + Math.random() * 2);
+            childHeight = (int) (getHeight() + Math.round(-1 + Math.random() * 3));
         }
         else{
-            childHeight = partner.getHeight() + (int)(-1 + Math.random() * 2);
+            childHeight = (int) (partner.getHeight() + Math.round(-1 + Math.random() * 3));
         }
         if(childWidth < 1)childWidth = 1;
         if(childHeight < 1)childHeight = 1;
