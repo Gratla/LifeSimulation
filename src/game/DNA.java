@@ -2,6 +2,8 @@ package game;
 
 public class DNA {
 
+    private static final boolean childDNAEnabled = false;
+
     private Creature creature;
     private DNAProperty[][] adultProperties;
     private DNAProperty[][] childProperties;
@@ -46,7 +48,12 @@ public class DNA {
     void copyChildProperties(){
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                properties[i][j] = childProperties[i][j];
+                if(childDNAEnabled){
+                    properties[i][j] = childProperties[i][j];
+                }
+                else{
+                    properties[i][j] = adultProperties[i][j];
+                }
             }
         }
     }
