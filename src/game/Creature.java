@@ -59,7 +59,7 @@ public abstract class Creature {
                 int intValue = dna.getColor(i,j);
 
                 for (int k = 0; k < 4; k++) {
-                    image[i * 4 + j * height * 4 + k] =
+                    image[j * width * 4 + i * 4 + k] =
                             (byte)((intValue >>> (k * 8))  & (0x000000FF));
                 }
             }

@@ -1,5 +1,6 @@
 package game;
 
+import com.sun.security.jgss.GSSUtil;
 import datastructures.Vector2D;
 import game.graphics.GraphicsData;
 import javafx.animation.Animation;
@@ -72,8 +73,10 @@ public class World {
             }
         }
 
-        creatures.addAll(children);
-        distanceManager.addCreatures(children);
+        if(!children.isEmpty()){
+            creatures.addAll(children);
+            distanceManager.addCreatures(children);
+        }
         distanceManager.recalculateDistances(creatures);
     }
 
@@ -146,7 +149,7 @@ public class World {
                             int intValue = landscape.getGroundColor(creature.getPixelOldPosX() + i,creature.getPixelOldPosY() + j);
 
                             for (int k = 0; k < 4; k++) {
-                                image[i * 4 + j * creature.height * 4 + k] =
+                                image[j * creature.width * 4 + i * 4 + k] =
                                         (byte)((intValue >>> (k * 8))  & (0x000000FF));
                             }
                         }

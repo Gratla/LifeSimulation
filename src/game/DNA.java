@@ -59,14 +59,14 @@ public class DNA {
     }
 
     DNAProperty getAdultProperty(int x, int y){
-        if(x >= 0 && x < width && y >= 0 && y < height){
+        if(x >= 0 && x < adultProperties.length && y >= 0 && y < adultProperties[0].length){
             return adultProperties[x][y];
         }
         return null;
     }
 
     DNAProperty getChildProperty(int x, int y){
-        if(x >= 0 && x < width && y >= 0 && y < height){
+        if(x >= 0 && x < childProperties.length && y >= 0 && y < childProperties[0].length){
             return childProperties[x][y];
         }
         return null;
@@ -99,10 +99,15 @@ public class DNA {
     }
 
     int getColor(int x, int y){
-        if(properties[x][y] == null){
+        if(x < properties.length && x >= 0 && y < properties[x].length && y >= 0){
+            if(properties[x][y] == null){
+                return 0x00000000;
+            }
+            return properties[x][y].getColor();
+        }
+        else{
             return 0x00000000;
         }
-        return properties[x][y].getColor();
     }
 
     public void deleteRandomProperty() {

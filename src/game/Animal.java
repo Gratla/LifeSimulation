@@ -31,8 +31,8 @@ public class Animal extends Creature {
         else{
             childHeight = (int) (partner.getHeight() + Math.round(-1 + Math.random() * 3));
         }
-        if(childWidth < 1)childWidth = 1;
-        if(childHeight < 1)childHeight = 1;
+        if(childWidth < 2)childWidth = 2;
+        if(childHeight < 2)childHeight = 2;
 
         Creature child = new Animal(new Vector2D((position.x + partner.position.x)/2, (position.y + partner.position.y)/2), childWidth, childHeight);
 
