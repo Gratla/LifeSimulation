@@ -14,6 +14,10 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import game.World;
@@ -59,7 +63,7 @@ public class GraphicsController {
         primaryStage.setTitle("Life Simulation");
 
         Scene scene = new Scene(root, width, height);
-        setInputHandler(scene);
+        setInputHandler(primaryStage, scene);
         primaryStage.setScene(scene);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
@@ -68,14 +72,30 @@ public class GraphicsController {
         primaryStage.show();
     }
 
-    private void setInputHandler(Scene scene) {
+    private void setInputHandler(Stage primaryStage, Scene scene) {
         KeyCombination esc = new KeyCodeCombination(KeyCode.ESCAPE);
+        Stage infoStage = new Stage();
+        infoStage.initModality(Modality.NONE);
+        infoStage.initOwner(primaryStage);
+
         scene.setOnKeyPressed(event -> {
             if(esc.match(event)){
                 if(menuActive){
                     menuActive = false;
+                    infoStage.hide();
                 }
                 else{
+                    VBox infoVBox = new VBox(20);
+                    infoVBox.getChildren().add(new Text("Test"));
+                    Scene infoScene = new Scene(infoVBox, 300, 200);
+                    infoScene.setOnKeyPressed(keyEvent -> {
+                        if(esc.match(keyEvent)){
+                            menuActive = false;
+                            infoStage.hide();
+                        }
+                    });
+                    infoStage.setScene(infoScene);
+                    infoStage.show();
                     menuActive = true;
                 }
             }
