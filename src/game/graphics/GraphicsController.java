@@ -34,7 +34,6 @@ public class GraphicsController {
     private int width;
     private int height;
     private byte[] imageInArray;
-    private boolean menuActive;
 
     private Canvas canvas;
     private GraphicsContext graphicsContext;
@@ -57,7 +56,7 @@ public class GraphicsController {
         pixelWriter = graphicsContext.getPixelWriter();
         this.world = world;
 
-        this.menu = new Menu(world);
+        this.menu = new Menu(primaryStage, world);
 
         root.getChildren().add(canvas);
         primaryStage.setTitle("Life Simulation");
@@ -74,29 +73,15 @@ public class GraphicsController {
 
     private void setInputHandler(Stage primaryStage, Scene scene) {
         KeyCombination esc = new KeyCodeCombination(KeyCode.ESCAPE);
-        Stage infoStage = new Stage();
-        infoStage.initModality(Modality.NONE);
-        infoStage.initOwner(primaryStage);
 
         scene.setOnKeyPressed(event -> {
             if(esc.match(event)){
-                if(menuActive){
-                    menuActive = false;
-                    infoStage.hide();
+                if(menu.isActive()){
+                    menu.hide();
                 }
                 else{
-                    VBox infoVBox = new VBox(20);
-                    infoVBox.getChildren().add(new Text("Test"));
-                    Scene infoScene = new Scene(infoVBox, 300, 200);
-                    infoScene.setOnKeyPressed(keyEvent -> {
-                        if(esc.match(keyEvent)){
-                            menuActive = false;
-                            infoStage.hide();
-                        }
-                    });
-                    infoStage.setScene(infoScene);
-                    infoStage.show();
-                    menuActive = true;
+
+                    menu.show();
                 }
             }
         });
@@ -120,8 +105,8 @@ public class GraphicsController {
         image.getPixelWriter().setPixels(0, 0, width, height, PixelFormat.getByteBgraInstance(), imageInArray, 0, width * 4);
         graphicsContext.drawImage(image, 0, 0);
 
-        if(menuActive){
-            menu.draw();
+        if(menu.isActive()){
+            menu.update();
         }
     }
 

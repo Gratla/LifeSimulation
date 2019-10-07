@@ -165,4 +165,10 @@ public class World {
     public int getGroundColor(int x, int y){
         return landscape.getGroundColor(x,y);
     }
+
+    public String getWorldInfo(){
+        String output = "";
+        output += Creature.getCreatureInfo();
+        return output;
+    }
 }

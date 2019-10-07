@@ -120,5 +120,13 @@ public abstract class Creature {
         return Math.sqrt(deltaX*deltaX + deltaY*deltaY);
     }
 
+    public static String getCreatureInfo(){
+        String output = "";
 
+        output += "Number of Creatures: ";
+        output += numberOfCreatures;
+
+        output += "\n";
+        return output;
+    }
 }
