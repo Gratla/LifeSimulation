@@ -46,8 +46,14 @@ public class DNA {
     }
 
     void copyChildProperties(){
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
+        if(childDNAEnabled){
+            properties = new DNAProperty[childProperties.length][childProperties[0].length];
+        }
+        else{
+            properties = new DNAProperty[adultProperties.length][adultProperties[0].length];
+        }
+        for (int i = 0; i < properties.length; i++) {
+            for (int j = 0; j < properties[i].length; j++) {
                 if(childDNAEnabled){
                     properties[i][j] = childProperties[i][j];
                 }
@@ -73,8 +79,8 @@ public class DNA {
     }
 
     void useProperties(Creature creature){
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
+        for (int i = 0; i < properties.length; i++) {
+            for (int j = 0; j < properties[i].length; j++) {
                 if(properties[i][j] != null){
                     properties[i][j].useProperty(creature);
                 }

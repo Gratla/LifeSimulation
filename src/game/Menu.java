@@ -42,8 +42,17 @@ public class Menu {
     }
 
     public void update(){
+        KeyCombination esc = new KeyCodeCombination(KeyCode.ESCAPE);
         infoVBox = new VBox(20);
         infoVBox.getChildren().add(new Text(world.getWorldInfo()));
+        infoScene = new Scene(infoVBox, 300, 200);
+        infoScene.setOnKeyPressed(keyEvent -> {
+            if(esc.match(keyEvent)){
+                menuActive = false;
+                infoStage.hide();
+            }
+        });
+        infoStage.setScene(infoScene);
     }
 
     public boolean isActive(){

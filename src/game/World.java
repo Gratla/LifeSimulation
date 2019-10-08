@@ -1,6 +1,5 @@
 package game;
 
-import com.sun.security.jgss.GSSUtil;
 import datastructures.Vector2D;
 import game.graphics.GraphicsData;
 import javafx.animation.Animation;
@@ -168,7 +167,14 @@ public class World {
 
     public String getWorldInfo(){
         String output = "";
-        output += Creature.getCreatureInfo();
+        output += Creature.getCreaturesInfo();
+
+        if(!creatures.isEmpty()){
+            for(Creature creature: creatures){
+                output += creature.getCreatureInfo();
+            }
+        }
+
         return output;
     }
 }

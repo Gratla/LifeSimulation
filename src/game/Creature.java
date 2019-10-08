@@ -120,10 +120,19 @@ public abstract class Creature {
         return Math.sqrt(deltaX*deltaX + deltaY*deltaY);
     }
 
-    public static String getCreatureInfo(){
+    public String getCreatureInfo(){
         String output = "";
 
-        output += "Number of Creatures: ";
+        output += "ID: " + id + "   Width: " + width + "   Height: " + height;
+
+        output += "\n";
+        return output;
+    }
+
+    public static String getCreaturesInfo(){
+        String output = "";
+
+        output += "Creatures:\nNumber of Creatures: ";
         output += numberOfCreatures;
 
         output += "\n";
