@@ -10,6 +10,7 @@ public class Mind {
     private Vector2D idleDirection;
     private Creature target;
     private Creature partner;
+    private MemoryStorage memoryStorage;
 
     private int thinkCounter;
 
@@ -20,6 +21,8 @@ public class Mind {
 
     Mind(Creature creature){
         this.creature = creature;
+        this.memoryStorage = new MemoryStorage();
+
         this.desiredPosition = new Vector2D(1,1);
         this.idleDirection = new Vector2D(1,1);
 
