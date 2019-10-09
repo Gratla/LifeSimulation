@@ -123,7 +123,7 @@ public abstract class Creature {
     public String getCreatureInfo(){
         String output = "";
 
-        output += "ID: " + id + "   Width: " + width + "   Height: " + height;
+        output += "ID: " + id + "   Class: " + getClass().getSimpleName() + "   Width: " + width + "   Height: " + height;
 
         output += "\n";
         return output;

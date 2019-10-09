@@ -18,19 +18,9 @@ public class Animal extends Creature {
     public Creature createChild(Creature partner){
         int childWidth, childHeight;
 
-        if(Math.random() < 0.5){
-            childWidth = (int) (getWidth() + Math.round(-1 + Math.random() * 3));
-        }
-        else{
-            childWidth = (int) (partner.getWidth() + Math.round(-1 + Math.random() * 3));
-        }
+        childWidth = calcChildWidth(partner);
+        childHeight = calcChildHeight(partner);
 
-        if(Math.random() < 0.5){
-            childHeight = (int) (getHeight() + Math.round(-1 + Math.random() * 3));
-        }
-        else{
-            childHeight = (int) (partner.getHeight() + Math.round(-1 + Math.random() * 3));
-        }
         if(childWidth < 2)childWidth = 2;
         if(childHeight < 2)childHeight = 2;
 
@@ -67,6 +57,24 @@ public class Animal extends Creature {
         dna.setChildProperties(childProperties);
         dna.copyChildProperties();
         return child;
+    }
+
+    private int calcChildWidth(Creature partner){
+        if(Math.random() < 0.5){
+            return (int) (getWidth() + Math.round(-1 + Math.random() * 3));
+        }
+        else{
+            return (int) (partner.getWidth() + Math.round(-1 + Math.random() * 3));
+        }
+    }
+
+    private int calcChildHeight(Creature partner){
+        if(Math.random() < 0.5){
+            return (int) (getHeight() + Math.round(-1 + Math.random() * 3));
+        }
+        else{
+            return (int) (partner.getHeight() + Math.round(-1 + Math.random() * 3));
+        }
     }
 
     public Creature createCreature(Vector2D position, int width, int height){
